@@ -12,3 +12,4 @@
 - Keep one dependencies object for application packages and one devDependencies object for tooling; duplicate JSON keys silently discard required packages.
 - Use bun.lock as the sole dependency lockfile and Bun for installs to avoid conflicting dependency trees.
 - Keep Tailwind and its Vite integration on the same exact version; the shared Lovable Vite config already registers the plugin.
+- Site images (including the logo) are imported from src/assets so they ship inside the build; Lovable-only CDN asset links break on GitHub-based external hosting.
