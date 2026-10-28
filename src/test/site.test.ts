@@ -1,7 +1,16 @@
 import { describe, expect, it } from "vitest";
-import { courses, whatsappLink } from "@/lib/site";
+import { address, courses, mapsEmbedUrl, mapsRouteUrl, mapsSearchUrl, whatsappLink } from "@/lib/site";
 
 describe("site info", () => {
+  it("uses the updated street address without the shop or gallery", () => {
+    expect(address).toBe("Av. Visconde de Suassuna, 337, Santo Amaro. Recife-PE.");
+  });
+  it("all map links point to the updated address", () => {
+    const destination = "Av. Visconde de Suassuna, 337, Santo Amaro, Recife, PE";
+    expect(new URL(mapsSearchUrl).searchParams.get("query")).toBe(destination);
+    expect(new URL(mapsRouteUrl).searchParams.get("destination")).toBe(destination);
+    expect(new URL(mapsEmbedUrl).searchParams.get("q")).toBe(destination);
+  });
   it("Corte e Costura costs R$ 300,00 per month", () => {
     expect(courses.costura.price).toBe("R$ 300,00");
     expect(courses.costura.priceLabel).toBe("Mensalidade");

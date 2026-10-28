@@ -25,10 +25,10 @@ export function whatsappLink(contact: ContactId, course?: CourseId) {
 }
 
 export const address =
-  "Av. Visconde de Suassuna, 337, Santo Amaro, Loja 8 (Galeria Suassuna). Recife-PE.";
-const q = "Av. Visconde de Suassuna, 337, Santo Amaro, Loja 8, Galeria Suassuna, Recife, PE";
+  "Av. Visconde de Suassuna, 337, Santo Amaro. Recife-PE.";
+const q = "Av. Visconde de Suassuna, 337, Santo Amaro, Recife, PE";
 export const mapsSearchUrl =
-  "https://www.google.com/maps/search/?api=1&query=Av.%20Visconde%20de%20Suassuna%2C%20337%2C%20Santo%20Amaro%2C%20Loja%208%2C%20Galeria%20Suassuna%2C%20Recife%2C%20PE";
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
 export const mapsRouteUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(q)}`;
 export const mapsEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(q)}&output=embed`;
 
