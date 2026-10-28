@@ -1,5 +1,5 @@
 import { MapPin } from "lucide-react";
-import logo from "@/assets/logo.png.asset.json";
+import logoSrc from "@/assets/logo.png";
 import { address, contacts, mapsSearchUrl, whatsappLink } from "@/lib/site";
 
 export function Footer() {
@@ -7,7 +7,7 @@ export function Footer() {
     <footer className="bg-ink text-ink-foreground">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 md:grid-cols-4">
         <div>
-          <img src={logo.url} alt="Maison da Costura" width={96} height={96} loading="lazy" className="h-24 w-24 rounded-full" />
+          <img src={logoSrc} alt="Maison da Costura" width={96} height={96} loading="lazy" className="h-24 w-24 rounded-full" />
           <p className="mt-4 font-script text-2xl text-blush">Costurando ideias, criando possibilidades.</p>
         </div>
         <div>
