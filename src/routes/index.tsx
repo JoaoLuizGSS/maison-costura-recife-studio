@@ -152,7 +152,7 @@ const lessons = [
   ["Saia Base", "Aprenda a desenvolver a modelagem base de uma saia."],
   ["Saia Evasê e Saia Lápis", "Conheça a modelagem de dois estilos de saia: evasê e lápis."],
   ["Blusa Manga Japonesa", "Aprenda a construir a modelagem de uma blusa com manga japonesa."],
-  ["Calça Elástico", "Desenvolva a modelagem de uma calça com elástico."],
+  ["Calça Cós de Elástico", "Desenvolva a modelagem de uma calça com cós de elástico."],
   ["Vestido Tubinho", "Conheça a construção da modelagem de um vestido tubinho."],
   ["Calça de Pijama Feminina", "Aprenda a desenvolver a modelagem de uma calça feminina de pijama."],
 ] as const;
