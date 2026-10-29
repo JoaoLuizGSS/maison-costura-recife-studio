@@ -6,6 +6,9 @@ import modelagem from "@/assets/modelagem.jpg";
 import tecidos from "@/assets/tecidos.jpg";
 import pecas from "@/assets/pecas.jpg";
 import acabamento from "@/assets/acabamento.jpg";
+import lauraImg from "@/assets/laura.jpg";
+import tatianaImg from "@/assets/tatiana.png";
+import patioLogo from "@/assets/patio-tecidos.jpg";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { ContactChooserProvider, useContactChooser } from "@/components/site/ContactChooser";
@@ -39,7 +42,9 @@ function Index() {
         <CosturaDetails />
         <ModelagemDetails />
         <About />
+        <Founders />
         <Gallery />
+        <Partnership />
         <Contact />
         <Location />
       </main>
@@ -206,6 +211,51 @@ function About() {
   );
 }
 
+function Founders() {
+  return (
+    <section id="fundadoras" className="mx-auto max-w-6xl px-4 py-24">
+      <SectionTitle eyebrow="Quem faz acontecer" title="As Fundadoras">
+        Duas histórias, uma paixão: transformar ideias em peças únicas.
+      </SectionTitle>
+      <div className="grid gap-10 md:grid-cols-2">
+        <article className="flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-soft sm:p-8">
+          <img
+            src={lauraImg}
+            alt="Laura Ayres"
+            className="aspect-[4/5] w-full rounded-xl object-cover object-top shadow-sm"
+          />
+          <h3 className="mt-6 font-display text-2xl font-bold text-foreground">Laura Ayres</h3>
+          <div className="mt-4 space-y-3 text-muted-foreground leading-relaxed">
+            <p>
+              Laura Ayres é designer de moda sustentável, educadora e idealizadora de projetos voltados para costura, modelagem, upcycling e geração de renda através da moda. Atua na formação de pessoas por meio de cursos e oficinas de corte, costura e criação, utilizando a moda como ferramenta de transformação social, valorização cultural e desenvolvimento de novos negócios.
+            </p>
+            <p>
+              Seu trabalho conecta criatividade, sustentabilidade e empreendedorismo, incentivando a transformação de resíduos têxteis em produtos com identidade e propósito.
+            </p>
+          </div>
+        </article>
+
+        <article className="flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-soft sm:p-8">
+          <img
+            src={tatianaImg}
+            alt="Tatiana"
+            className="aspect-[4/5] w-full rounded-xl object-cover object-top shadow-sm"
+          />
+          <h3 className="mt-6 font-display text-2xl font-bold text-foreground">Tatiana</h3>
+          <div className="mt-4 space-y-3 text-muted-foreground leading-relaxed">
+            <p>
+              Me chamo Tatiana, sou costureira a cerca de 10 anos. Comecei costurando Roupas de Cama assistindo vídeos no YouTube e desde então me apaixonei pela costura. Meu início foi em Moda Casa e com o tempo senti a necessidade de aprender coisas novas, como roupas, já que meus filhos nasceram e a necessidade surgiu.
+            </p>
+            <p>
+              Foi quando resolvi fazer o curso de Corte, Costura e Modelagem no Senac-PE. Desde então tenho realizado cursos para me aprimorar na costura, fazendo roupas sob medida para minhas clientes. A costureira tira do papel o sonho de suas clientes, que são os vestidos/roupas idealizados por elas.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+  );
+}
+
 function Gallery() {
   const items = [
     { src: hero, alt: "Máquina de costura antiga no ateliê", w: 1600, h: 1072, cls: "md:col-span-2 md:row-span-2" },
@@ -224,6 +274,42 @@ function Gallery() {
         ))}
       </div>
       <p className="mt-4 text-center text-xs text-muted-foreground">Imagens meramente ilustrativas.</p>
+    </section>
+  );
+}
+
+function Partnership() {
+  return (
+    <section id="parceria" className="bg-secondary/40 py-24">
+      <div className="mx-auto max-w-4xl px-4 text-center">
+        <SectionTitle eyebrow="Parceria" title="Uma parceria que fortalece o universo da costura" />
+        <div className="mx-auto mt-8 max-w-md rounded-2xl border border-border bg-card p-8 shadow-soft">
+          <img src={patioLogo} alt="Pátio Tecidos e Aviamentos" className="mx-auto h-28 w-auto object-contain" />
+          <h3 className="mt-4 font-display text-xl font-semibold text-foreground">Pátio Tecidos e Aviamentos</h3>
+        </div>
+        <div className="mx-auto mt-8 max-w-2xl space-y-4 text-muted-foreground leading-relaxed">
+          <p>
+            O Maison da Costura tem a satisfação de apresentar sua parceria com a Pátio Tecidos e Aviamentos, empresa localizada no Recife, que faz parte do universo dos tecidos e aviamentos.
+          </p>
+          <p>
+            Essa parceria aproxima duas marcas ligadas ao mundo da costura, valorizando os materiais, a criatividade e o desenvolvimento de projetos que dão vida a novas ideias.
+          </p>
+        </div>
+        <div className="mt-10 inline-flex flex-col items-center rounded-xl border border-border bg-card p-6 shadow-soft sm:flex-row sm:gap-6">
+          <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+            <MapPin className="h-5 w-5 text-primary shrink-0" aria-hidden />
+            <span>Rua do Livramento, 93, São José, Recife - PE. CEP: 50020-570.</span>
+          </div>
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=Rua+do+Livramento,+93,+S%C3%A3o+Jos%C3%A9,+Recife+-+PE,+50020-570"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={btn("primary", "mt-4 sm:mt-0")}
+          >
+            <MapPin className="h-4 w-4" aria-hidden /> Ver localização
+          </a>
+        </div>
+      </div>
     </section>
   );
 }
