@@ -222,8 +222,9 @@ function Founders() {
           <img
             src={lauraImg}
             alt="Laura Ayres"
-            className="aspect-[4/5] w-full rounded-xl object-cover object-[center_-30px] shadow-sm"
+            className="aspect-[4/5] w-full rounded-xl object-cover object-center shadow-sm"
           />
+
 
           <h3 className="mt-6 font-display text-2xl font-bold text-foreground">Laura Ayres</h3>
           <div className="mt-4 space-y-3 text-muted-foreground leading-relaxed">
