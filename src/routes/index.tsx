@@ -42,7 +42,7 @@ function Index() {
         <CosturaDetails />
         <ModelagemDetails />
         <About />
-        <Founders />
+        <Teachers />
         <Gallery />
         <Partnership />
         <Contact />
@@ -211,9 +211,9 @@ function About() {
   );
 }
 
-function Founders() {
+function Teachers() {
   return (
-    <section id="fundadoras" className="mx-auto max-w-6xl px-4 py-24">
+    <section id="professoras" className="mx-auto max-w-6xl px-4 py-24">
       <SectionTitle eyebrow="Quem faz acontecer" title="As Professoras">
         Duas histórias, uma paixão: transformar ideias em peças únicas.
       </SectionTitle>
