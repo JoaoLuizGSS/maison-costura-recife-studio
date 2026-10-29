@@ -214,7 +214,7 @@ function About() {
 function Founders() {
   return (
     <section id="fundadoras" className="mx-auto max-w-6xl px-4 py-24">
-      <SectionTitle eyebrow="Quem faz acontecer" title="As Fundadoras">
+      <SectionTitle eyebrow="Quem faz acontecer" title="As Professoras">
         Duas histórias, uma paixão: transformar ideias em peças únicas.
       </SectionTitle>
       <div className="grid gap-10 md:grid-cols-2">
