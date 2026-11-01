@@ -46,7 +46,14 @@ function ChatThreadPage() {
   const { threadId } = Route.useParams();
   const { data: initialMessages, isLoading, error } = useQuery<UIMessage[]>({
     queryKey: ["chat-messages", threadId],
-    queryFn: () => getThreadMessages({ data: { threadId } }) as Promise<UIMessage[]>,
+    queryFn: async () => {
+      const rows = await getThreadMessages({ data: { threadId } });
+      return rows.map((m) => ({
+        id: m.id,
+        role: m.role as UIMessage["role"],
+        parts: m.parts as UIMessage["parts"],
+      }));
+    },
     staleTime: Infinity,
     retry: false,
   });
