@@ -14,7 +14,8 @@ const CHAT_MODEL = "google/gemini-3.1-flash-lite";
 const DEFAULT_THREAD_TITLE = "Nova conversa";
 
 export function buildSystemPrompt(): string {
-  const [tatiana, laura] = contacts;
+  const tatiana = contacts.find((c) => c.id === "tatiana")!;
+  const laura = contacts.find((c) => c.id === "laura")!;
   return `Você é o assistente virtual do Maison da Costura, um espaço de cursos de corte, costura e modelagem de roupas em Recife-PE. Responda sempre em português brasileiro, com tom acolhedor, objetivo e elegante.
 
 INFORMAÇÕES OFICIAIS (use somente estes dados):
