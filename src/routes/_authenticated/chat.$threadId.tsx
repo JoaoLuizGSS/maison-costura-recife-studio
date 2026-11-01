@@ -44,9 +44,9 @@ export const Route = createFileRoute("/_authenticated/chat/$threadId")({
 
 function ChatThreadPage() {
   const { threadId } = Route.useParams();
-  const { data: initialMessages, isLoading, error } = useQuery({
+  const { data: initialMessages, isLoading, error } = useQuery<UIMessage[]>({
     queryKey: ["chat-messages", threadId],
-    queryFn: () => getThreadMessages({ data: { threadId } }),
+    queryFn: () => getThreadMessages({ data: { threadId } }) as Promise<UIMessage[]>,
     staleTime: Infinity,
     retry: false,
   });

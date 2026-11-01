@@ -12,7 +12,10 @@ const description = "Entre com sua conta para conversar com o assistente do Mais
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>) => ({
-    redirect: typeof search.redirect === "string" && search.redirect.startsWith("/") ? search.redirect : "/chat",
+    redirect:
+      typeof search["redirect"] === "string" && search["redirect"].startsWith("/")
+        ? (search["redirect"] as string)
+        : "/chat",
   }),
   head: () => ({
     meta: [
