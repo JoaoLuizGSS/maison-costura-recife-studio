@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Check, Clock, MapPin, MessageCircle, Navigation, Scissors, Users, Wallet, BookOpen } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Bot, Check, Clock, MapPin, MessageCircle, Navigation, Scissors, Users, Wallet, BookOpen } from "lucide-react";
 import hero from "@/assets/hero.jpg";
 import costura from "@/assets/costura.jpg";
 import modelagem from "@/assets/modelagem.jpg";
@@ -68,6 +68,7 @@ function Hero() {
           <div className="mt-9 flex flex-wrap gap-3">
             <a href="#cursos" className={btn("primary")}>Conhecer os Cursos</a>
             <a href="#contato" className={btn("light")}><MessageCircle className="h-4 w-4" aria-hidden /> Falar pelo WhatsApp</a>
+            <Link to="/chat" className={btn("light")}><Bot className="h-4 w-4" aria-hidden /> Tirar dúvidas com o assistente</Link>
           </div>
         </div>
       </div>
