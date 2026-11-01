@@ -1,6 +1,10 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
+import { Bot, LogOut, Menu, X } from "lucide-react";
 import logoSrc from "@/assets/logo.png";
+import { useSession } from "@/hooks/use-session";
+import { supabase } from "@/integrations/supabase/client";
 import { btn } from "./ui";
 
 export const navLinks = [
@@ -15,6 +19,17 @@ export const navLinks = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const { session } = useSession();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  async function handleSignOut() {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  }
+
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
       <div className="mx-auto flex min-h-18 max-w-7xl items-center justify-between gap-4 px-4 py-2">
@@ -28,7 +43,18 @@ export function Header() {
             ))}
           </ul>
         </nav>
-        <a href="#cursos" className={btn("primary", "hidden px-5 py-2.5 lg:inline-flex")}>Conheça Nossos Cursos</a>
+        <div className="hidden items-center gap-2 lg:flex">
+          <Link to="/chat" className={btn("outline", "px-5 py-2.5")}>
+            <Bot className="h-4 w-4" aria-hidden /> Assistente
+          </Link>
+          {session ? (
+            <button onClick={handleSignOut} className={btn("primary", "px-5 py-2.5")}>
+              <LogOut className="h-4 w-4" aria-hidden /> Sair
+            </button>
+          ) : (
+            <Link to="/auth" className={btn("primary", "px-5 py-2.5")}>Entrar</Link>
+          )}
+        </div>
         <button className="rounded-md p-2 lg:hidden" aria-label={open ? "Fechar menu" : "Abrir menu"} aria-expanded={open} onClick={() => setOpen(!open)}>
           {open ? <X /> : <Menu />}
         </button>
@@ -39,7 +65,20 @@ export function Header() {
             {navLinks.map(([href, label]) => (
               <li key={href}><a href={href} onClick={() => setOpen(false)} className="block py-2.5 font-display text-lg">{label}</a></li>
             ))}
-            <li className="pt-3"><a href="#cursos" onClick={() => setOpen(false)} className={btn("primary", "w-full")}>Conheça Nossos Cursos</a></li>
+            <li className="pt-3">
+              <Link to="/chat" onClick={() => setOpen(false)} className={btn("outline", "w-full")}>
+                <Bot className="h-4 w-4" aria-hidden /> Assistente
+              </Link>
+            </li>
+            <li className="pt-2">
+              {session ? (
+                <button onClick={() => { setOpen(false); handleSignOut(); }} className={btn("primary", "w-full")}>
+                  <LogOut className="h-4 w-4" aria-hidden /> Sair
+                </button>
+              ) : (
+                <Link to="/auth" onClick={() => setOpen(false)} className={btn("primary", "w-full")}>Entrar</Link>
+              )}
+            </li>
           </ul>
         </nav>
       )}
