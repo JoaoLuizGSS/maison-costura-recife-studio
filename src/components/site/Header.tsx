@@ -27,7 +27,7 @@ export function Header() {
     await queryClient.cancelQueries();
     queryClient.clear();
     await supabase.auth.signOut();
-    navigate({ to: "/auth", replace: true });
+    navigate({ to: "/auth", search: { redirect: "/chat" }, replace: true });
   }
 
   return (
@@ -52,7 +52,7 @@ export function Header() {
               <LogOut className="h-4 w-4" aria-hidden /> Sair
             </button>
           ) : (
-            <Link to="/auth" className={btn("primary", "px-5 py-2.5")}>Entrar</Link>
+            <Link to="/auth" search={{ redirect: "/chat" }} className={btn("primary", "px-5 py-2.5")}>Entrar</Link>
           )}
         </div>
         <button className="rounded-md p-2 lg:hidden" aria-label={open ? "Fechar menu" : "Abrir menu"} aria-expanded={open} onClick={() => setOpen(!open)}>
@@ -76,7 +76,7 @@ export function Header() {
                   <LogOut className="h-4 w-4" aria-hidden /> Sair
                 </button>
               ) : (
-                <Link to="/auth" onClick={() => setOpen(false)} className={btn("primary", "w-full")}>Entrar</Link>
+                <Link to="/auth" search={{ redirect: "/chat" }} onClick={() => setOpen(false)} className={btn("primary", "w-full")}>Entrar</Link>
               )}
             </li>
           </ul>
