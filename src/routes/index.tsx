@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { Check, Clock, MapPin, MessageCircle, Navigation, Scissors, Users, Wallet, BookOpen } from "lucide-react";
 import hero from "@/assets/hero.jpg";
 import costura from "@/assets/costura.jpg";
@@ -301,26 +301,6 @@ function Partnership() {
   );
 }
 
-function PreInscricao() {
-  return (
-    <section id="pre-inscricao" className="bg-white py-24">
-      <div className="mx-auto max-w-4xl px-4">
-        <SectionTitle eyebrow="Garanta sua vaga" title="Faça sua Pré-Inscrição" />
-        <div className="w-full flex justify-center rounded-2xl border border-border bg-card p-2 shadow-soft overflow-hidden">
-          <iframe
-            data-tally-src="https://tally.so/r/q5LOWG"
-            loading="lazy"
-            width="100%"
-            height="550"
-            title="Formulário de Pré-Inscrição Maison da Costura"
-            style={{ border: "none" }}
-            className="w-full max-w-2xl"
-          />
-        </div>
-      </div>
-    </section>
-  );
-}
 
 
 function PreInscricao() {
