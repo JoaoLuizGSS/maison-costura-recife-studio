@@ -34,40 +34,6 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  useEffect(() => {
-    // Carrega o script oficial do Tally para ler as configurações do formulário
-    const script = document.createElement("script");
-    script.src = "https://tally.so";
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
-  return (
-    <ContactChooserProvider>
-      <Header />
-      <main>
-        <Hero />
-        <Courses />
-        <CosturaDetails />
-        <ModelagemDetails />
-        <About />
-        <Teachers />
-        <Gallery />
-        <Partnership />
-        <PreInscricao />
-        <Contact />
-        <Location />
-      </main>
-      <Footer />
-    </ContactChooserProvider>
-  );
-}
-
-
   return (
     <ContactChooserProvider>
       <Header />
