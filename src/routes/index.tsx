@@ -357,6 +357,32 @@ function PreInscricao() {
 }
 
 
+function PreInscricao() {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://tally.so/widgets/embed.js";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      script.remove();
+    };
+  }, []);
+
+  return (
+    <section id="pre-inscricao" className="mx-auto max-w-6xl px-4 py-24">
+      <SectionTitle eyebrow="Pré-inscrição" title="Garanta sua vaga">
+        Preencha o formulário abaixo para fazer sua pré-inscrição nos cursos do Maison da Costura.
+      </SectionTitle>
+      <iframe
+        data-tally-src="https://tally.so/embed/q5LOWG?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+        loading="lazy"
+        title="Formulário de pré-inscrição"
+        className="mx-auto w-full max-w-2xl border-0 p-4"
+      />
+    </section>
+  );
+}
+
 function Contact() {
   return (
     <section id="contato" className="bg-secondary/60 py-24">
