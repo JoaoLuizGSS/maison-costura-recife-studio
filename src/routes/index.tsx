@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Bot, Check, Clock, MapPin, MessageCircle, Navigation, Scissors, Users, Wallet, BookOpen } from "lucide-react";
 import hero from "@/assets/hero.jpg";
@@ -33,26 +34,18 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  return (
-    <ContactChooserProvider>
-      <Header />
-      <main>
-        <Hero />
-        <Courses />
-        <CosturaDetails />
-        <ModelagemDetails />
-        <About />
-        <Teachers />
-        <Gallery />
-        <Partnership />
-        <Contact />
-        <Location />
-      </main>
-      <Footer />
-    </ContactChooserProvider>
-  );
+useEffect(() => {
+const script = document.createElement("script");
+script.src = "tally.so";
+script.async = true;
+document.body.appendChild(script);
+return () => {
+document.body.removeChild(script);
+};
+}, []);
+return (
+);
 }
-
 function Hero() {
   return (
     <section id="inicio" className="relative overflow-hidden bg-ink text-ink-foreground">
@@ -67,64 +60,12 @@ function Hero() {
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <a href="#cursos" className={btn("primary")}>Conhecer os Cursos</a>
-            <a href="#contato" className={btn("light")}><MessageCircle className="h-4 w-4" aria-hidden /> Falar pelo WhatsApp</a>
+            <a href="#pre-inscricao" className={btn("light")}>Garantir Vaga</a>
             <Link to="/chat" className={btn("light")}><Bot className="h-4 w-4" aria-hidden /> Tirar dúvidas com o assistente</Link>
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function CourseCard({ img, alt, name, text, info, cta, course }: { img: string; alt: string; name: string; text: string; info: [string, string][]; cta: string; course: "costura" | "modelagem" }) {
-  const choose = useContactChooser();
-  return (
-    <article className="flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-soft">
-      <img src={img} alt={alt} width={1200} height={912} loading="lazy" className="aspect-[4/3] w-full object-cover" />
-      <div className="flex flex-1 flex-col p-7">
-        <h3 className="text-2xl font-semibold">{name}</h3>
-        <p className="mt-3 text-muted-foreground">{text}</p>
-        <div className="my-6"><InfoList items={info} /></div>
-        <button onClick={() => choose(course)} className={btn("primary", "mt-auto")}>{cta}</button>
-      </div>
-    </article>
-  );
-}
-
-function Courses() {
-  return (
-    <section id="cursos" className="mx-auto max-w-6xl px-4 py-24">
-      <SectionTitle eyebrow="Nossos cursos" title="Encontre o curso ideal para você" />
-      <div className="grid gap-8 md:grid-cols-2">
-        <CourseCard course="costura" img={costura} alt="Mãos costurando tecido rosa em máquina antiga" name="Curso de Corte e Costura"
-          text="Aprenda corte e costura desde os primeiros passos ou aperfeiçoe seus conhecimentos. Conheça os materiais, desenvolva habilidades práticas e descubra as possibilidades de criar e confeccionar suas próprias peças."
-          info={[["Duração", courses.costura.duration], ["Mensalidade", `${courses.costura.price} por mês`], ["Público", "Iniciantes e intermediários"]]}
-          cta="Tenho Interesse em Corte e Costura" />
-        <CourseCard course="modelagem" img={modelagem} alt="Moldes de papel com régua, lápis e fita métrica" name="Curso de Modelagem"
-          text="Aprenda a desenvolver moldes de roupas e conheça a construção de seis modelagens diferentes. Explore peças variadas e amplie seus conhecimentos para aplicar em seus projetos de costura."
-          info={[["Duração", courses.modelagem.duration], ["Investimento total", `${courses.modelagem.price} (curso completo)`], ["Conteúdo", "6 aulas de modelagem"]]}
-          cta="Tenho Interesse em Modelagem" />
-      </div>
-    </section>
-  );
-}
-
-const topics = ["Conhecendo os materiais de costura.", "Introdução à máquina de costura.", "Tipos de tecidos.", "Medidas e preparação dos tecidos.", "Noções de corte.", "Técnicas de costura.", "Acabamentos e detalhes.", "Prática de confecção."];
-
-function HighlightBox({ items, note, children }: { items: { icon: typeof Clock; label: string; value: string }[]; note?: string; children: React.ReactNode }) {
-  return (
-    <div className="rounded-xl bg-ink p-8 text-ink-foreground shadow-soft">
-      <ul className="space-y-5">
-        {items.map(({ icon: Icon, label, value }) => (
-          <li key={label} className="flex items-center gap-4">
-            <span className="grid h-11 w-11 place-items-center rounded-full bg-primary"><Icon className="h-5 w-5" aria-hidden /></span>
-            <span><span className="block text-xs uppercase tracking-widest text-blush">{label}</span><span className="font-display text-xl">{value}</span></span>
-          </li>
-        ))}
-      </ul>
-      {note && <p className="mt-6 rounded-md border border-blush/40 p-3 text-sm text-ink-foreground/90">{note}</p>}
-      <div className="mt-7">{children}</div>
-    </div>
   );
 }
 
@@ -220,13 +161,7 @@ function Teachers() {
       </SectionTitle>
       <div className="grid gap-10 md:grid-cols-2">
         <article className="flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-soft sm:p-8">
-          <img
-            src={lauraImg}
-            alt="Laura Ayres"
-            className="aspect-[4/5] w-full rounded-xl object-cover object-center shadow-sm"
-          />
-
-
+          <img src={lauraImg} alt="Laura Ayres" className="aspect-[4/5] w-full rounded-xl object-cover object-center shadow-sm" />
           <h3 className="mt-6 font-display text-2xl font-bold text-foreground">Laura Ayres</h3>
           <div className="mt-4 space-y-3 text-muted-foreground leading-relaxed">
             <p>
@@ -239,11 +174,7 @@ function Teachers() {
         </article>
 
         <article className="flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-soft sm:p-8">
-          <img
-            src={tatianaImg}
-            alt="Tatiana"
-            className="aspect-[4/5] w-full rounded-xl object-cover object-top shadow-sm"
-          />
+          <img src={tatianaImg} alt="Tatiana" className="aspect-[4/5] w-full rounded-xl object-cover object-top shadow-sm" />
           <h3 className="mt-6 font-display text-2xl font-bold text-foreground">Tatiana</h3>
           <div className="mt-4 space-y-3 text-muted-foreground leading-relaxed">
             <p>
@@ -298,64 +229,66 @@ function Partnership() {
             Essa parceria aproxima duas marcas ligadas ao mundo da costura, valorizando os materiais, a criatividade e o desenvolvimento de projetos que dão vida a novas ideias.
           </p>
         </div>
-        <div className="mt-10 inline-flex flex-col items-center rounded-xl border border-border bg-card p-6 shadow-soft sm:flex-row sm:gap-6">
-          <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-            <MapPin className="h-5 w-5 text-primary shrink-0" aria-hidden />
-            <span>Rua do Livramento, 93, São José, Recife - PE. CEP: 50020-570.</span>
-          </div>
-          <a
-            href="https://www.google.com/maps/search/?api=1&query=Rua+do+Livramento,+93,+S%C3%A3o+Jos%C3%A9,+Recife+-+PE,+50020-570"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={btn("primary", "mt-4 sm:mt-0")}
-          >
-            <MapPin className="h-4 w-4" aria-hidden /> Ver localização
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
+Use o código com cuidado.
+Rua do Livramento, 93, São José, Recife - PE. CEP: 50020-570.
 
+<a href="google.com" target="_blank" rel="noopener noreferrer" className={btn("primary", "mt-4 sm:mt-0")}>
+ Ver localização
+
+
+
+
+);
+}
+function PreInscricao() {
+return (
+Preencha o formulário oficial abaixo. Assim que terminar, os dados serão enviados diretamente para as professoras Tatiana e Laura entrarem em contato!
+
+
+<iframe
+data-tally-src="tally.so"
+loading="lazy"
+width="100%"
+height="550"
+title="Formulário de Pré-Inscrição Maison da Costura"
+style={{ border: "none" }}
+className="w-full max-w-2xl"
+/>
+
+
+
+);
+}
 function Contact() {
-  return (
-    <section id="contato" className="bg-secondary/60 py-24">
-      <div className="mx-auto max-w-4xl px-4">
-        <SectionTitle eyebrow="Contato" title="Fale com o Maison da Costura">
-          Tem dúvidas sobre nossos cursos? Entre em contato com nossa equipe. Será um prazer conversar com você!
-        </SectionTitle>
-        <div className="grid gap-6 sm:grid-cols-2">
-          {contacts.map((c) => (
-            <article key={c.id} className="rounded-xl border border-border bg-card p-8 text-center shadow-soft">
-              <span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-secondary font-script text-4xl text-primary" aria-hidden>{c.name[0]}</span>
-              <h3 className="mt-4 text-2xl font-semibold">{c.name}</h3>
-              <p className="mt-1 text-muted-foreground">{c.phone}</p>
-              <a href={whatsappLink(c.id)} target="_blank" rel="noopener noreferrer" className={btn("whatsapp", "mt-6 w-full")}>
-                <MessageCircle className="h-4 w-4" aria-hidden /> Falar com {c.name} pelo WhatsApp
-              </a>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+return (
+Tem dúvidas sobre nossos cursos? Entre em contato com nossa equipe. Será um prazer conversar com você!
 
+
+{contacts.map((c) => (
+
+{c.name}
+{c.name}
+{c.phone}
+<a href={whatsappLink(c.id)} target="_blank" rel="noopener noreferrer" className={btn("whatsapp", "mt-6 w-full")}>
+ Falar com {c.name} pelo WhatsApp
+
+
+))}
+
+
+
+);
+}
 function Location() {
-  return (
-    <section id="como-chegar" className="mx-auto max-w-6xl px-4 py-24">
-      <SectionTitle eyebrow="Como chegar" title="Venha conhecer o Maison da Costura" />
-      <div className="grid gap-8 overflow-hidden rounded-xl border border-border bg-card shadow-soft md:grid-cols-2">
-        <div className="flex flex-col justify-center p-8 md:p-10">
-          <MapPin className="h-10 w-10 text-primary" aria-hidden />
-          <address className="mt-4 font-display text-2xl not-italic leading-snug">{address}</address>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a href={mapsSearchUrl} target="_blank" rel="noopener noreferrer" className={btn("primary")}><MapPin className="h-4 w-4" aria-hidden /> Ver no Google Maps</a>
-            <a href={mapsRouteUrl} target="_blank" rel="noopener noreferrer" className={btn("outline")}><Navigation className="h-4 w-4" aria-hidden /> Traçar Rota</a>
-          </div>
-        </div>
-        <iframe title="Mapa do Maison da Costura" src={mapsEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-80 w-full border-0 md:h-full md:min-h-[380px]" />
-      </div>
-    </section>
-  );
+return (
+{address}
+
+<a href={mapsSearchUrl} target="_blank" rel="noopener noreferrer" className={btn("primary")}> Ver no Google Maps
+<a href={mapsRouteUrl} target="_blank" rel="noopener noreferrer" className={btn("outline")}> Traçar Rota
+
+
+
+
+
+);
 }
