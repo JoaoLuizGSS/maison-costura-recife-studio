@@ -355,6 +355,7 @@ function Location() {
   return (
     <section id="como-chegar" className="mx-auto max-w-6xl px-4 py-24">
       <SectionTitle eyebrow="Como chegar" title="Venha conhecer o Maison da Costura" />
+      <div className="grid gap-8 overflow-hidden rounded-xl border border-border bg-card shadow-soft md:grid-cols-2">
         <div className="flex flex-col justify-center p-8 md:p-10">
           <MapPin className="h-10 w-10 text-primary" aria-hidden />
           <address className="mt-4 font-display text-2xl not-italic leading-snug">{address}</address>
