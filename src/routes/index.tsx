@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { Check, Clock, MapPin, MessageCircle, Navigation, Scissors, Users, Wallet, BookOpen } from "lucide-react";
 import hero from "@/assets/hero.jpg";
 import costura from "@/assets/costura.jpg";
@@ -34,40 +34,6 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  useEffect(() => {
-    // Carrega o script oficial do Tally para ler as configurações do formulário
-    const script = document.createElement("script");
-    script.src = "https://tally.so";
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
-  return (
-    <ContactChooserProvider>
-      <Header />
-      <main>
-        <Hero />
-        <Courses />
-        <CosturaDetails />
-        <ModelagemDetails />
-        <About />
-        <Teachers />
-        <Gallery />
-        <Partnership />
-        <PreInscricao />
-        <Contact />
-        <Location />
-      </main>
-      <Footer />
-    </ContactChooserProvider>
-  );
-}
-
-
   return (
     <ContactChooserProvider>
       <Header />
@@ -335,27 +301,33 @@ function Partnership() {
   );
 }
 
+
+
 function PreInscricao() {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://tally.so/widgets/embed.js";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      script.remove();
+    };
+  }, []);
+
   return (
-    <section id="pre-inscricao" className="bg-white py-24">
-      <div className="mx-auto max-w-4xl px-4">
-        <SectionTitle eyebrow="Garanta sua vaga" title="Faça sua Pré-Inscrição" />
-        <div className="w-full flex justify-center rounded-2xl border border-border bg-card p-2 shadow-soft overflow-hidden">
-          <iframe
-            data-tally-src="https://tally.so/r/q5LOWG"
-            loading="lazy"
-            width="100%"
-            height="550"
-            title="Formulário de Pré-Inscrição Maison da Costura"
-            style={{ border: "none" }}
-            className="w-full max-w-2xl"
-          />
-        </div>
-      </div>
+    <section id="pre-inscricao" className="mx-auto max-w-6xl px-4 py-24">
+      <SectionTitle eyebrow="Pré-inscrição" title="Garanta sua vaga">
+        Preencha o formulário abaixo para fazer sua pré-inscrição nos cursos do Maison da Costura.
+      </SectionTitle>
+      <iframe
+        data-tally-src="https://tally.so/embed/q5LOWG?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+        loading="lazy"
+        title="Formulário de pré-inscrição"
+        className="mx-auto w-full max-w-2xl border-0 p-4"
+      />
     </section>
   );
 }
-
 
 function Contact() {
   return (
@@ -383,6 +355,7 @@ function Location() {
   return (
     <section id="como-chegar" className="mx-auto max-w-6xl px-4 py-24">
       <SectionTitle eyebrow="Como chegar" title="Venha conhecer o Maison da Costura" />
+      <div className="grid gap-8 overflow-hidden rounded-xl border border-border bg-card shadow-soft md:grid-cols-2">
         <div className="flex flex-col justify-center p-8 md:p-10">
           <MapPin className="h-10 w-10 text-primary" aria-hidden />
           <address className="mt-4 font-display text-2xl not-italic leading-snug">{address}</address>
