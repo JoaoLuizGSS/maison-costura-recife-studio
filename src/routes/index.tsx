@@ -10,6 +10,7 @@ import acabamento from "@/assets/acabamento.jpg";
 import lauraImg from "@/assets/laura.jpg";
 import tatianaImg from "@/assets/tatiana.png";
 import patioLogo from "@/assets/patio-tecidos.jpg";
+import { AssistantProvider, useAssistant } from "@/components/site/Assistant";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { ContactChooserProvider, useContactChooser } from "@/components/site/ContactChooser";
@@ -36,6 +37,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <ContactChooserProvider>
+      <AssistantProvider>
       <Header />
       <main>
         <Hero />
@@ -51,11 +53,13 @@ function Index() {
         <Location />
       </main>
       <Footer />
+      </AssistantProvider>
     </ContactChooserProvider>
   );
 }
 
 function Hero() {
+  const { openAssistant } = useAssistant();
   return (
     <section id="inicio" className="relative overflow-hidden bg-ink text-ink-foreground">
       <img src={hero} alt="Ateliê de costura com máquina antiga, tecidos rosa e manequim" width={1600} height={1072} className="absolute inset-0 h-full w-full object-cover opacity-55" />
@@ -70,6 +74,7 @@ function Hero() {
           <div className="mt-9 flex flex-wrap gap-3">
             <a href="#cursos" className={btn("primary")}>Conhecer os Cursos</a>
             <a href="#pre-inscricao" className={btn("light")}>Garantir Vaga</a>
+            <button type="button" onClick={openAssistant} className={btn("light")}><MessageCircle className="h-4 w-4" aria-hidden /> Tirar dúvidas</button>
           </div>
         </div>
       </div>
