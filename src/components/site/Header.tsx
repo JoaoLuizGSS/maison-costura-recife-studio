@@ -6,6 +6,7 @@ import logoSrc from "@/assets/logo.png";
 import { useSession } from "@/hooks/use-session";
 import { supabase } from "@/integrations/supabase/client";
 import { btn } from "./ui";
+import { useAssistant } from "./Assistant";
 
 export const navLinks = [
   ["#inicio", "Início"],
@@ -21,6 +22,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const { session } = useSession();
   const navigate = useNavigate();
+  const { openAssistant } = useAssistant();
   const queryClient = useQueryClient();
 
   async function handleSignOut() {
@@ -44,9 +46,9 @@ export function Header() {
           </ul>
         </nav>
         <div className="hidden items-center gap-2 lg:flex">
-          <Link to="/chat" className={btn("outline", "px-5 py-2.5")}>
+          <button type="button" onClick={openAssistant} className={btn("outline", "px-5 py-2.5")}>
             <Bot className="h-4 w-4" aria-hidden /> Assistente
-          </Link>
+          </button>
           {session ? (
             <button onClick={handleSignOut} className={btn("primary", "px-5 py-2.5")}>
               <LogOut className="h-4 w-4" aria-hidden /> Sair
@@ -66,9 +68,9 @@ export function Header() {
               <li key={href}><a href={href} onClick={() => setOpen(false)} className="block py-2.5 font-display text-lg">{label}</a></li>
             ))}
             <li className="pt-3">
-              <Link to="/chat" onClick={() => setOpen(false)} className={btn("outline", "w-full")}>
+              <button type="button" onClick={() => { setOpen(false); openAssistant(); }} className={btn("outline", "w-full")}>
                 <Bot className="h-4 w-4" aria-hidden /> Assistente
-              </Link>
+              </button>
             </li>
             <li className="pt-2">
               {session ? (
