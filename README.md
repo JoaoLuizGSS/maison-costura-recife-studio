@@ -570,7 +570,7 @@ Inclua:
 
 - WhatsApp da Laura: (81) 98652-7779.
 
-- Endereço: Av. Visconde de Suassuna, 337, Santo Amaro, Loja 7 (Galeria Suassuna), Recife-PE.
+- Endereço: Av. Visconde de Suassuna, 337, Santo Amaro, Loja 8 (Galeria Suassuna), Recife-PE.
 
 - Botão ou link para abrir a localização no Google Maps.
 
