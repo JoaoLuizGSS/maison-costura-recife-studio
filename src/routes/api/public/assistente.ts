@@ -8,7 +8,26 @@ import { createLovableAiGatewayProvider, getLovableAiGatewayRunId } from "@/lib/
 export const Route = createFileRoute("/api/public/assistente")({
   server: {
     handlers: {
+      OPTIONS: async () => new Response(null, { status: 204, headers: CORS }),
       POST: async ({ request }) => {
+        const res = await handle(request);
+        Object.entries(CORS).forEach(([k, v]) => res.headers.set(k, v));
+        return res;
+      },
+    },
+  },
+});
+
+const CORS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
+
+async function handle(request: Request): Promise<Response> {
+  {
+    {
+      {
         const apiKey = process.env["LOVABLE_API_KEY"];
         if (!apiKey) return Response.json({ error: "IA não configurada." }, { status: 500 });
         let body: { messages?: UIMessage[] };

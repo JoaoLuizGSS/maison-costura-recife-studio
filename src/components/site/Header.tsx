@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { Bot, LogOut, Menu, X } from "lucide-react";
 import logoSrc from "@/assets/logo.png";
@@ -14,6 +14,7 @@ export const navLinks = [
   ["#corte-e-costura", "Corte e Costura"],
   ["#modelagem", "Modelagem"],
   ["#sobre", "Sobre Nós"],
+  ["#duvidas", "Dúvidas"],
   ["#contato", "Contato"],
   ["#como-chegar", "Como Chegar"],
 ] as const;
@@ -49,12 +50,10 @@ export function Header() {
           <button type="button" onClick={openAssistant} className={btn("outline", "px-5 py-2.5")}>
             <Bot className="h-4 w-4" aria-hidden /> Assistente
           </button>
-          {session ? (
+          {session && (
             <button onClick={handleSignOut} className={btn("primary", "px-5 py-2.5")}>
               <LogOut className="h-4 w-4" aria-hidden /> Sair
             </button>
-          ) : (
-            <Link to="/auth" search={{ redirect: "/chat" }} className={btn("primary", "px-5 py-2.5")}>Entrar</Link>
           )}
         </div>
         <button className="rounded-md p-2 lg:hidden" aria-label={open ? "Fechar menu" : "Abrir menu"} aria-expanded={open} onClick={() => setOpen(!open)}>
@@ -72,15 +71,13 @@ export function Header() {
                 <Bot className="h-4 w-4" aria-hidden /> Assistente
               </button>
             </li>
-            <li className="pt-2">
-              {session ? (
+            {session && (
+              <li className="pt-2">
                 <button onClick={() => { setOpen(false); handleSignOut(); }} className={btn("primary", "w-full")}>
                   <LogOut className="h-4 w-4" aria-hidden /> Sair
                 </button>
-              ) : (
-                <Link to="/auth" search={{ redirect: "/chat" }} onClick={() => setOpen(false)} className={btn("primary", "w-full")}>Entrar</Link>
-              )}
-            </li>
+              </li>
+            )}
           </ul>
         </nav>
       )}
