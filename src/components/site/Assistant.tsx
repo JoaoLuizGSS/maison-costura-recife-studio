@@ -19,6 +19,8 @@ import {
 } from "@/components/ai-elements/prompt-input";
 import { Shimmer } from "@/components/ai-elements/shimmer";
 
+const ASSISTANT_ORIGIN = "https://maison-costura-recife-studio.lovable.app";
+
 const Ctx = createContext<{ openAssistant: () => void }>({ openAssistant: () => {} });
 export const useAssistant = () => useContext(Ctx);
 
@@ -33,7 +35,13 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
 }
 
 function AssistantPanel({ onClose }: { onClose: () => void }) {
-  const transport = useMemo(() => new DefaultChatTransport({ api: "/api/public/assistente" }), []);
+  // External hosting (e.g. maisondacostura.com.br) has no server, so call the Lovable-hosted endpoint there.
+  const transport = useMemo(() => {
+    const h = window.location.hostname;
+    const local = h === "localhost" || h.endsWith(".lovable.app") || h.endsWith(".lovableproject.com");
+    const api = local ? "/api/public/assistente" : `${ASSISTANT_ORIGIN}/api/public/assistente`;
+    return new DefaultChatTransport({ api });
+  }, []);
   const { messages, sendMessage, status, stop, error } = useChat({ id: "assistente-publico", transport });
   const busy = status === "submitted" || status === "streaming";
 

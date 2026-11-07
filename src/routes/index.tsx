@@ -49,6 +49,7 @@ function Index() {
         <Gallery />
         <Partnership />
         <PreInscricao />
+        <Faq />
         <Contact />
         <Location />
       </main>
@@ -307,6 +308,37 @@ function Partnership() {
 }
 
 
+
+const faqs: [string, string][] = [
+  ["Preciso saber costurar para começar?", "Não. O curso de Corte e Costura é para iniciantes e intermediários, começando pelos materiais, a máquina de costura e os tipos de tecido."],
+  ["Quanto tempo dura cada curso?", `Corte e Costura dura ${courses.costura.duration}. Modelagem dura ${courses.modelagem.duration}, com 6 aulas.`],
+  ["Quanto custa o curso de Corte e Costura?", `A mensalidade é de ${courses.costura.price}.`],
+  ["O valor da Modelagem é mensal?", `Não. ${courses.modelagem.price} é o valor total do curso de Modelagem.`],
+  ["O que aprendo na Modelagem?", "Saia Base, Saia Evasê e Saia Lápis, Blusa Manga Japonesa, Calça Cós de Elástico, Vestido Tubinho e Calça de Pijama Feminina."],
+  ["Onde ficam as aulas?", address],
+  ["Como faço para me inscrever?", "Preencha a pré-inscrição nesta página ou fale com Tatiana ou Laura pelo WhatsApp para saber sobre vagas e horários."],
+];
+
+function Faq() {
+  return (
+    <section id="duvidas" className="mx-auto max-w-3xl px-4 py-24">
+      <SectionTitle eyebrow="Dúvidas frequentes" title="Perguntas frequentes">
+        Respostas rápidas sobre os cursos do Maison da Costura.
+      </SectionTitle>
+      <div className="mt-10 divide-y divide-border rounded-2xl border border-border bg-card">
+        {faqs.map(([q, a]) => (
+          <details key={q} className="group px-5 py-4">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-lg">
+              {q}
+              <span className="text-primary transition-transform group-open:rotate-45" aria-hidden>+</span>
+            </summary>
+            <p className="mt-3 text-muted-foreground">{a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 function PreInscricao() {
   useEffect(() => {
