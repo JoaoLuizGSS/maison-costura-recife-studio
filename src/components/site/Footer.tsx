@@ -15,6 +15,8 @@ export function Footer() {
           <ul className="space-y-2 text-sm text-ink-foreground/80">
             <li><a className="hover:text-blush" href="#corte-e-costura">Corte e Costura</a></li>
             <li><a className="hover:text-blush" href="#modelagem">Modelagem</a></li>
+            <li><a className="hover:text-blush" href="#ajustes-e-reformas">Ajustes e Reformas</a></li>
+            <li><a className="hover:text-blush" href="#materiais">Materiais digitais</a></li>
           </ul>
         </div>
         <div>

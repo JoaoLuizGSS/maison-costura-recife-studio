@@ -14,6 +14,19 @@ describe("assistant system prompt", () => {
     expect(prompt).toContain("1 mês e meio");
   });
 
+  it("states the Ajustes e Reformas course facts", () => {
+    expect(prompt).toContain("Ajustes e Reformas");
+    expect(prompt).toContain("15 dias");
+    expect(prompt).toContain("07/12 a 18/12");
+    expect(prompt).toContain("2x");
+    expect(prompt).toContain("3 vagas");
+  });
+
+  it("mentions the digital products", () => {
+    expect(prompt).toContain("Corte e Costura do Zero");
+    expect(prompt).toContain("Precificação");
+  });
+
   it("includes both WhatsApp contacts", () => {
     expect(prompt).toContain("(81) 99132-4803");
     expect(prompt).toContain("(81) 98652-7779");

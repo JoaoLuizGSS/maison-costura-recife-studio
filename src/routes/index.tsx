@@ -7,6 +7,7 @@ import modelagem from "@/assets/modelagem.jpg";
 import tecidos from "@/assets/tecidos.jpg";
 import pecas from "@/assets/pecas.jpg";
 import acabamento from "@/assets/acabamento.jpg";
+import ajustes from "@/assets/ajustes.jpg";
 import lauraImg from "@/assets/laura.jpg";
 import tatianaImg from "@/assets/tatiana.png";
 import patioLogo from "@/assets/patio-tecidos.jpg";
@@ -15,7 +16,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { ContactChooserProvider, useContactChooser } from "@/components/site/ContactChooser";
 import { InfoList, SectionTitle, btn } from "@/components/site/ui";
-import { address, contacts, courses, mapsEmbedUrl, mapsRouteUrl, mapsSearchUrl, whatsappLink } from "@/lib/site";
+import { address, contacts, courses, mapsEmbedUrl, mapsRouteUrl, mapsSearchUrl, materiais, whatsappLink } from "@/lib/site";
 
 const title = "Maison da Costura | Cursos de Corte, Costura e Modelagem em Recife";
 const description = "Cursos de corte e costura e de modelagem de roupas em Santo Amaro, Recife-PE. Conheça valores, duração e fale conosco pelo WhatsApp.";
@@ -44,6 +45,8 @@ function Index() {
         <Courses />
         <CosturaDetails />
         <ModelagemDetails />
+        <AjustesDetails />
+        <Materiais />
         <About />
         <Teachers />
         <Gallery />
@@ -83,7 +86,7 @@ function Hero() {
   );
 }
 
-function CourseCard({ img, alt, name, text, info, cta, course }: { img: string; alt: string; name: string; text: string; info: [string, string][]; cta: string; course: "costura" | "modelagem" }) {
+function CourseCard({ img, alt, name, text, info, cta, course }: { img: string; alt: string; name: string; text: string; info: [string, string][]; cta: string; course: "costura" | "modelagem" | "ajustes" }) {
   const choose = useContactChooser();
   return (
     <article className="flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-soft">
@@ -102,7 +105,7 @@ function Courses() {
   return (
     <section id="cursos" className="mx-auto max-w-6xl px-4 py-24">
       <SectionTitle eyebrow="Nossos cursos" title="Encontre o curso ideal para você" />
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         <CourseCard course="costura" img={costura} alt="Mãos costurando tecido rosa em máquina antiga" name="Curso de Corte e Costura"
           text="Aprenda corte e costura desde os primeiros passos ou aperfeiçoe seus conhecimentos. Conheça os materiais, desenvolva habilidades práticas e descubra as possibilidades de criar e confeccionar suas próprias peças."
           info={[["Duração", courses.costura.duration], ["Mensalidade", `${courses.costura.price} por mês`], ["Público", "Iniciantes e intermediários"]]}
@@ -111,6 +114,10 @@ function Courses() {
           text="Aprenda a desenvolver moldes de roupas e conheça a construção de seis modelagens diferentes. Explore peças variadas e amplie seus conhecimentos para aplicar em seus projetos de costura."
           info={[["Duração", courses.modelagem.duration], ["Investimento total", `${courses.modelagem.price} (curso completo)`], ["Conteúdo", "6 aulas de modelagem"]]}
           cta="Tenho Interesse em Modelagem" />
+        <CourseCard course="ajustes" img={ajustes} alt="Mãos ajustando uma peça de roupa em máquina de costura antiga" name="Curso de Ajustes e Reformas"
+          text="Aprenda a fazer ajustes e reformas em roupas, turma intensiva de dezembro com atendimento individualizado: 1 aluno por máquina."
+          info={[["Duração", courses.ajustes.duration], ["Investimento", `${courses.ajustes.price} (em até 2x)`], ["Turma", `${courses.ajustes.period}, ${courses.ajustes.schedule.toLowerCase()}`], ["Vagas", courses.ajustes.spots]]}
+          cta="Tenho Interesse em Ajustes e Reformas" />
       </div>
     </section>
   );
@@ -193,6 +200,57 @@ function ModelagemDetails() {
           items={[{ icon: Clock, label: "Duração", value: "1 mês e meio" }, { icon: Wallet, label: "Valor total", value: "R$ 600,00" }, { icon: BookOpen, label: "Quantidade", value: "6 aulas de modelagem" }]}>
           <button onClick={() => choose("modelagem")} className={btn("primary", "w-full")}>Quero Saber Mais sobre Modelagem</button>
         </HighlightBox>
+      </div>
+    </section>
+  );
+}
+
+function AjustesDetails() {
+  const choose = useContactChooser();
+  return (
+    <section id="ajustes-e-reformas" className="bg-secondary/60 py-24">
+      <div className="mx-auto max-w-6xl px-4">
+        <SectionTitle eyebrow="Ajustes e Reformas" title="Nova turma intensiva de dezembro">
+          Um curso rápido e prático para aprender ajustes e reformas de roupas, com atendimento individualizado: 1 aluno por máquina.
+        </SectionTitle>
+        <div className="grid items-start gap-10 lg:grid-cols-[1.4fr_1fr]">
+          <div>
+            <img src={ajustes} alt="Ajuste de roupa em máquina de costura antiga com alfinetes e fita métrica" width={1200} height={912} loading="lazy" className="aspect-[4/3] w-full rounded-xl object-cover shadow-soft" />
+            <p className="mt-4 rounded-lg border border-primary/40 bg-card p-4 text-center font-display text-lg text-primary">
+              {courses.ajustes.spots} — garanta a sua!
+            </p>
+          </div>
+          <HighlightBox note="O valor de R$ 300,00 pode ser parcelado em até 2x."
+            items={[
+              { icon: Clock, label: "Duração", value: `${courses.ajustes.duration} (${courses.ajustes.period})` },
+              { icon: Wallet, label: "Investimento", value: "R$ 300,00 em até 2x" },
+              { icon: Users, label: "Horário", value: `${courses.ajustes.schedule} · ${courses.ajustes.perMachine}` },
+            ]}>
+            <button onClick={() => choose("ajustes")} className={btn("primary", "w-full")}><MessageCircle className="h-4 w-4" aria-hidden /> Garantir Minha Vaga</button>
+          </HighlightBox>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Materiais() {
+  return (
+    <section id="materiais" className="mx-auto max-w-6xl px-4 py-24">
+      <SectionTitle eyebrow="Materiais digitais" title="Aprenda no seu ritmo, de onde estiver">
+        Guias digitais do Maison da Costura para você estudar quando quiser.
+      </SectionTitle>
+      <div className="grid gap-8 md:grid-cols-2">
+        {materiais.map((m) => (
+          <article key={m.id} className="flex flex-col rounded-xl border border-border bg-card p-8 shadow-soft">
+            <BookOpen className="h-10 w-10 text-primary" aria-hidden />
+            <h3 className="mt-4 text-2xl font-semibold">{m.name}</h3>
+            <p className="mt-3 text-muted-foreground">{m.description}</p>
+            <a href={m.url} target="_blank" rel="noopener noreferrer" className={btn("primary", "mt-6 w-full sm:w-auto")}>
+              Quero adquirir
+            </a>
+          </article>
+        ))}
       </div>
     </section>
   );
@@ -311,9 +369,10 @@ function Partnership() {
 
 const faqs: [string, string][] = [
   ["Preciso saber costurar para começar?", "Não. O curso de Corte e Costura é para iniciantes e intermediários, começando pelos materiais, a máquina de costura e os tipos de tecido."],
-  ["Quanto tempo dura cada curso?", `Corte e Costura dura ${courses.costura.duration}. Modelagem dura ${courses.modelagem.duration}, com 6 aulas.`],
+  ["Quanto tempo dura cada curso?", `Corte e Costura dura ${courses.costura.duration}. Modelagem dura ${courses.modelagem.duration}, com 6 aulas. Ajustes e Reformas dura ${courses.ajustes.duration}, de ${courses.ajustes.period}.`],
   ["Quanto custa o curso de Corte e Costura?", `A mensalidade é de ${courses.costura.price}.`],
   ["O valor da Modelagem é mensal?", `Não. ${courses.modelagem.price} é o valor total do curso de Modelagem.`],
+  ["Como funciona o curso de Ajustes e Reformas?", `São ${courses.ajustes.duration} de aulas, de ${courses.ajustes.period}, ${courses.ajustes.schedule.toLowerCase()}, com 1 aluno por máquina. O investimento é de ${courses.ajustes.price}, em até 2x. ${courses.ajustes.spots}.`],
   ["O que aprendo na Modelagem?", "Saia Base, Saia Evasê e Saia Lápis, Blusa Manga Japonesa, Calça Cós de Elástico, Vestido Tubinho e Calça de Pijama Feminina."],
   ["Onde ficam as aulas?", address],
   ["Como faço para me inscrever?", "Preencha a pré-inscrição nesta página ou fale com Tatiana ou Laura pelo WhatsApp para saber sobre vagas e horários."],

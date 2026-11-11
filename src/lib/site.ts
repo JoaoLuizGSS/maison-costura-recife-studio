@@ -1,5 +1,5 @@
 export type ContactId = "tatiana" | "laura";
-export type CourseId = "costura" | "modelagem";
+export type CourseId = "costura" | "modelagem" | "ajustes";
 
 export const contacts = [
   { id: "tatiana" as const, name: "Tatiana", phone: "(81) 99132-4803", wa: "5581991324803" },
@@ -9,6 +9,7 @@ export const contacts = [
 export const courseNames: Record<CourseId, string> = {
   costura: "Corte e Costura",
   modelagem: "Modelagem",
+  ajustes: "Ajustes e Reformas",
 };
 
 export function whatsappMessage(contact: ContactId, course?: CourseId) {
@@ -35,4 +36,30 @@ export const mapsEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(
 export const courses = {
   costura: { duration: "3 meses", price: "R$ 300,00", priceLabel: "Mensalidade" },
   modelagem: { duration: "1 mês e meio", price: "R$ 600,00", priceLabel: "Valor total do curso" },
+  ajustes: {
+    duration: "15 dias",
+    price: "R$ 300,00",
+    priceLabel: "Investimento (em até 2x)",
+    period: "07/12 a 18/12",
+    schedule: "Das 18h às 21h",
+    spots: "Restam apenas 3 vagas",
+    perMachine: "1 aluno por máquina",
+  },
 };
+
+export const materiais = [
+  {
+    id: "ebook-corte-costura",
+    name: "Ebook Corte e Costura do Zero",
+    description:
+      "Um guia digital para aprender corte e costura desde o início, no seu ritmo.",
+    url: "https://pay.kiwify.com.br/tDF58eq",
+  },
+  {
+    id: "guia-precificacao",
+    name: "Guia de Precificação para Costureiras",
+    description:
+      "Aprenda a precificar seus serviços de costura de forma justa e profissional.",
+    url: "https://pay.kiwify.com.br/9J86mah",
+  },
+] as const;

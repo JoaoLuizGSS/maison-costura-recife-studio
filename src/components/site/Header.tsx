@@ -13,6 +13,8 @@ export const navLinks = [
   ["#cursos", "Nossos Cursos"],
   ["#corte-e-costura", "Corte e Costura"],
   ["#modelagem", "Modelagem"],
+  ["#ajustes-e-reformas", "Ajustes e Reformas"],
+  ["#materiais", "Materiais"],
   ["#sobre", "Sobre Nós"],
   ["#duvidas", "Dúvidas"],
   ["#contato", "Contato"],
