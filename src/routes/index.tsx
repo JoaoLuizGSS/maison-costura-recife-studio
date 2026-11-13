@@ -57,8 +57,23 @@ function Index() {
         <Location />
       </main>
       <Footer />
+      <WhatsAppFab />
       </AssistantProvider>
     </ContactChooserProvider>
+  );
+}
+
+function WhatsAppFab() {
+  const choose = useContactChooser();
+  return (
+    <button
+      type="button"
+      onClick={() => choose()}
+      aria-label="Falar pelo WhatsApp com Tatiana ou Laura"
+      className="fixed bottom-4 right-4 z-40 grid h-14 w-14 place-items-center rounded-full bg-whatsapp text-primary-foreground shadow-soft transition-colors hover:bg-whatsapp/90"
+    >
+      <MessageCircle className="h-7 w-7" aria-hidden />
+    </button>
   );
 }
 
@@ -227,6 +242,7 @@ function AjustesDetails() {
               { icon: Users, label: "Horário", value: `${courses.ajustes.schedule} · ${courses.ajustes.perMachine}` },
             ]}>
             <button onClick={() => choose("ajustes")} className={btn("primary", "w-full")}><MessageCircle className="h-4 w-4" aria-hidden /> Garantir Minha Vaga</button>
+            <button onClick={() => choose("ajustes")} className={btn("whatsapp", "mt-3 w-full")}><MessageCircle className="h-4 w-4" aria-hidden /> Falar pelo WhatsApp</button>
           </HighlightBox>
         </div>
       </div>
@@ -400,6 +416,7 @@ function Faq() {
 }
 
 function PreInscricao() {
+  const choose = useContactChooser();
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://tally.so/widgets/embed.js";
@@ -421,6 +438,11 @@ function PreInscricao() {
         title="Formulário de pré-inscrição"
         className="mx-auto w-full max-w-2xl border-0 p-4"
       />
+      <div className="mt-6 text-center">
+        <button type="button" onClick={() => choose()} className={btn("whatsapp")}>
+          <MessageCircle className="h-4 w-4" aria-hidden /> Prefere conversar? Fale com Tatiana ou Laura pelo WhatsApp
+        </button>
+      </div>
     </section>
   );
 }

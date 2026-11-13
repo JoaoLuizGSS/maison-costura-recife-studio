@@ -1,9 +1,11 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { X } from "lucide-react";
+import { MessageCircle, X } from "lucide-react";
 
 import logoSrc from "@/assets/logo.png";
+import { useContactChooser } from "@/components/site/ContactChooser";
+import { btn } from "@/components/site/ui";
 import {
   Conversation,
   ConversationContent,
@@ -35,6 +37,7 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
 }
 
 function AssistantPanel({ onClose }: { onClose: () => void }) {
+  const choose = useContactChooser();
   // External hosting (e.g. maisondacostura.com.br) has no server, so call the Lovable-hosted endpoint there.
   const transport = useMemo(() => {
     const h = window.location.hostname;
@@ -49,7 +52,7 @@ function AssistantPanel({ onClose }: { onClose: () => void }) {
     <div
       role="dialog"
       aria-label="Assistente do Maison da Costura"
-      className="fixed inset-0 z-50 flex flex-col bg-background shadow-soft sm:inset-auto sm:bottom-4 sm:right-4 sm:h-[600px] sm:w-[400px] sm:rounded-2xl sm:border sm:border-border"
+      className="fixed inset-0 z-50 flex flex-col bg-background shadow-soft sm:inset-auto sm:bottom-24 sm:right-4 sm:h-[600px] sm:w-[400px] sm:rounded-2xl sm:border sm:border-border"
     >
       <div className="flex items-center gap-2 border-b border-border px-4 py-3">
         <img src={logoSrc} alt="" className="h-9 w-9 rounded-full" />
@@ -83,7 +86,14 @@ function AssistantPanel({ onClose }: { onClose: () => void }) {
             </Message>
           ))}
           {status === "submitted" && <Shimmer className="text-sm">Costurando a resposta...</Shimmer>}
-          {error && <p className="text-sm text-destructive">Não foi possível responder. Tente novamente.</p>}
+          {error && (
+            <div className="rounded-lg border border-border bg-card p-3">
+              <p className="text-sm text-destructive">Não foi possível responder agora.</p>
+              <button type="button" onClick={() => choose()} className={btn("whatsapp", "mt-3 w-full")}>
+                <MessageCircle className="h-4 w-4" aria-hidden /> Falar pelo WhatsApp
+              </button>
+            </div>
+          )}
         </ConversationContent>
         <ConversationScrollButton />
       </Conversation>
