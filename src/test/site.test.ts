@@ -38,4 +38,11 @@ describe("site info", () => {
     expect(whatsappLink("laura", "modelagem")).toContain("wa.me/5581986527779");
     expect(decodeURIComponent(whatsappLink("laura", "modelagem"))).toContain("curso de Modelagem");
   });
+  it("Ajustes WhatsApp message is ready with the course name for both attendants", () => {
+    for (const id of ["tatiana", "laura"] as const) {
+      const msg = decodeURIComponent(whatsappLink(id, "ajustes"));
+      expect(msg).toContain("curso de Ajustes e Reformas");
+      expect(msg).toContain("Maison da Costura");
+    }
+  });
 });
