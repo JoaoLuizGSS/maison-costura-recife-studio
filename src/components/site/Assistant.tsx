@@ -23,8 +23,6 @@ import {
 } from "@/components/ai-elements/prompt-input";
 import { Shimmer } from "@/components/ai-elements/shimmer";
 
-const ASSISTANT_ORIGIN = "https://maison-costura-recife-studio.lovable.app";
-
 const Ctx = createContext<{ openAssistant: () => void }>({ openAssistant: () => {} });
 export const useAssistant = () => useContext(Ctx);
 
@@ -46,13 +44,9 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
 
 function AssistantPanel({ onClose, returnFocusRef }: { onClose: () => void; returnFocusRef: RefObject<HTMLElement | null> }) {
   const choose = useContactChooser();
-  // External hosting (e.g. maisondacostura.com.br) has no server, so call the Lovable-hosted endpoint there.
-  const transport = useMemo(() => {
-    const h = typeof window === "undefined" ? "" : window.location.hostname;
-    const local = h === "" || h === "localhost" || h.endsWith(".lovable.app") || h.endsWith(".lovableproject.com");
-    const api = local ? "/api/public/assistente" : `${ASSISTANT_ORIGIN}/api/public/assistente`;
-    return new DefaultChatTransport({ api });
-  }, []);
+  // The site is served by its own server on every domain, so always call the same-origin endpoint
+  // (a cross-origin call to the lovable.app URL gets redirected to the custom domain and fails CORS).
+  const transport = useMemo(() => new DefaultChatTransport({ api: "/api/public/assistente" }), []);
   const { messages, sendMessage, status, stop, error } = useChat({ id: "assistente-publico", transport });
   const busy = status === "submitted" || status === "streaming";
 
