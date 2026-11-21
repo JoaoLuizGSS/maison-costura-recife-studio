@@ -9,16 +9,16 @@ import { btn } from "./ui";
 import { useAssistant } from "./Assistant";
 
 export const navLinks = [
-  ["#inicio", "Início"],
-  ["#cursos", "Nossos Cursos"],
-  ["#corte-e-costura", "Corte e Costura"],
-  ["#modelagem", "Modelagem"],
-  ["#ajustes-e-reformas", "Ajustes e Reformas"],
-  ["#materiais", "Materiais"],
-  ["#sobre", "Sobre Nós"],
-  ["#duvidas", "Dúvidas"],
-  ["#contato", "Contato"],
-  ["#como-chegar", "Como Chegar"],
+  ["/#inicio", "Início"],
+  ["/#cursos", "Nossos Cursos"],
+  ["/#corte-e-costura", "Corte e Costura"],
+  ["/#modelagem", "Modelagem"],
+  ["/#ajustes-e-reformas", "Ajustes e Reformas"],
+  ["/#materiais", "Materiais"],
+  ["/#sobre", "Sobre Nós"],
+  ["/#duvidas", "Dúvidas"],
+  ["/#contato", "Contato"],
+  ["/#como-chegar", "Como Chegar"],
 ] as const;
 
 export function Header() {
@@ -38,7 +38,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
       <div className="mx-auto flex min-h-18 max-w-7xl items-center justify-between gap-4 px-4 py-2">
-        <a href="#inicio" className="flex items-center gap-2" aria-label="Maison da Costura — início">
+        <a href="/#inicio" className="flex items-center gap-2" aria-label="Maison da Costura — início">
           <img src={logoSrc} alt="Maison da Costura" width={56} height={56} className="h-14 w-14 rounded-full" />
         </a>
         <nav aria-label="Principal" className="hidden lg:block">

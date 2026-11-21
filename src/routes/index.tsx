@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check, Clock, MapPin, MessageCircle, Navigation, Scissors, Users, Wallet, BookOpen } from "lucide-react";
 import hero from "@/assets/hero.jpg";
 import costura from "@/assets/costura.jpg";
@@ -16,7 +16,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { ContactChooserProvider, useContactChooser } from "@/components/site/ContactChooser";
 import { InfoList, SectionTitle, btn } from "@/components/site/ui";
-import { address, contacts, courses, mapsEmbedUrl, mapsRouteUrl, mapsSearchUrl, materiais, whatsappLink } from "@/lib/site";
+import { address, businessName, contactEmail, contacts, courses, mapsEmbedUrl, mapsRouteUrl, mapsSearchUrl, materiais, whatsappLink } from "@/lib/site";
 
 const title = "Maison da Costura | Cursos de Corte, Costura e Modelagem em Recife";
 const description = "Cursos de corte e costura e de modelagem de roupas em Santo Amaro, Recife-PE. Conheça valores, duração e fale conosco pelo WhatsApp.";
@@ -39,8 +39,9 @@ function Index() {
   return (
     <ContactChooserProvider>
       <AssistantProvider>
+      <a href="#conteudo" className="fixed left-4 top-3 z-[70] -translate-y-24 rounded-md bg-primary px-4 py-2 text-primary-foreground focus:translate-y-0">Ir para o conteúdo</a>
       <Header />
-      <main>
+      <main id="conteudo">
         <Hero />
         <Courses />
         <CosturaDetails />
@@ -92,7 +93,7 @@ function Hero() {
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <a href="#cursos" className={btn("primary")}>Conhecer os Cursos</a>
-            <a href="#pre-inscricao" className={btn("light")}>Garantir Vaga</a>
+            <a href="#pre-inscricao" className={btn("light")}>Fazer pré-inscrição</a>
             <button type="button" onClick={openAssistant} className={btn("light")}><MessageCircle className="h-4 w-4" aria-hidden /> Tirar dúvidas</button>
           </div>
         </div>
@@ -202,7 +203,7 @@ function ModelagemDetails() {
       <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {lessons.map(([name, text], i) => (
           <li key={name} className="relative rounded-xl border border-border bg-card p-7 transition hover:-translate-y-1 hover:shadow-soft">
-            <span className="font-display text-5xl text-accent" aria-hidden>{String(i + 1).padStart(2, "0")}</span>
+            <span className="font-display text-5xl text-primary" aria-hidden>{String(i + 1).padStart(2, "0")}</span>
             <Scissors className="absolute right-6 top-7 h-6 w-6 text-primary/60" aria-hidden />
                         <p className="mt-3 text-xs uppercase tracking-widest text-primary">Aula {i + 1}</p>
             <h3 className="mt-1 text-xl font-semibold">{name}</h3>
@@ -232,7 +233,7 @@ function AjustesDetails() {
           <div>
             <img src={ajustes} alt="Ajuste de roupa em máquina de costura antiga com alfinetes e fita métrica" width={1200} height={912} loading="lazy" className="aspect-[4/3] w-full rounded-xl object-cover shadow-soft" />
             <p className="mt-4 rounded-lg border border-primary/40 bg-card p-4 text-center font-display text-lg text-primary">
-              {courses.ajustes.spots} — garanta a sua!
+              {courses.ajustes.spots} — confirme a disponibilidade com a equipe.
             </p>
           </div>
           <HighlightBox note="O valor de R$ 300,00 pode ser parcelado em até 2x."
@@ -241,7 +242,7 @@ function AjustesDetails() {
               { icon: Wallet, label: "Investimento", value: "R$ 300,00 em até 2x" },
               { icon: Users, label: "Horário", value: `${courses.ajustes.schedule} · ${courses.ajustes.perMachine}` },
             ]}>
-            <button onClick={() => choose("ajustes")} className={btn("primary", "w-full")}><MessageCircle className="h-4 w-4" aria-hidden /> Garantir Minha Vaga</button>
+            <button onClick={() => choose("ajustes")} className={btn("primary", "w-full")}><MessageCircle className="h-4 w-4" aria-hidden /> Consultar disponibilidade</button>
             <button onClick={() => choose("ajustes")} className={btn("whatsapp", "mt-3 w-full")}><MessageCircle className="h-4 w-4" aria-hidden /> Falar pelo WhatsApp</button>
           </HighlightBox>
         </div>
@@ -262,8 +263,8 @@ function Materiais() {
             <BookOpen className="h-10 w-10 text-primary" aria-hidden />
             <h3 className="mt-4 text-2xl font-semibold">{m.name}</h3>
             <p className="mt-3 text-muted-foreground">{m.description}</p>
-            <a href={m.url} target="_blank" rel="noopener noreferrer" className={btn("primary", "mt-6 w-full sm:w-auto")}>
-              Quero adquirir
+            <a href={m.url} target="_blank" rel="noopener noreferrer" aria-label={`Quero adquirir ${m.name}`} className={btn("primary", "mt-6 w-full sm:w-auto")}>
+              Quero adquirir {m.name}
             </a>
           </article>
         ))}
@@ -372,8 +373,8 @@ function Partnership() {
             <MapPin className="h-5 w-5 text-primary shrink-0" aria-hidden />
             <span>Rua do Livramento, 93, São José, Recife - PE. CEP: 50020-570.</span>
           </div>
-          <a href="https://google.com" target="_blank" rel="noopener noreferrer" className={btn("primary", "mt-4 sm:mt-0")}>
-            <MapPin className="h-4 w-4" aria-hidden /> Ver localização
+          <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Rua do Livramento, 93, São José, Recife, PE, 50020-570")}`} target="_blank" rel="noopener noreferrer" className={btn("primary", "mt-4 sm:mt-0")}>
+            <MapPin className="h-4 w-4" aria-hidden /> Ver Pátio Tecidos no Google Maps
           </a>
         </div>
       </div>
@@ -417,27 +418,46 @@ function Faq() {
 
 function PreInscricao() {
   const choose = useContactChooser();
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://tally.so/widgets/embed.js";
-    script.async = true;
-    document.body.appendChild(script);
-    return () => {
-      script.remove();
-    };
-  }, []);
+  const [consent, setConsent] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
   return (
     <section id="pre-inscricao" className="mx-auto max-w-6xl px-4 py-24">
-      <SectionTitle eyebrow="Pré-inscrição" title="Garanta sua vaga">
-        Preencha o formulário abaixo para fazer sua pré-inscrição nos cursos do Maison da Costura.
+      <SectionTitle eyebrow="Pré-inscrição" title="Faça sua pré-inscrição">
+        Manifeste seu interesse nos cursos. A disponibilidade da vaga será confirmada pela equipe.
       </SectionTitle>
-      <iframe
-        data-tally-src="https://tally.so/embed/q5LOWG?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-        loading="lazy"
-        title="Formulário de pré-inscrição"
-        className="mx-auto w-full max-w-2xl border-0 p-4"
-      />
+      <div className="mx-auto max-w-2xl rounded-xl border border-border bg-card p-6 shadow-soft">
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          Se a inscrição for para menor de 18 anos, o formulário deve ser preenchido e enviado pelo pai, mãe ou responsável legal.
+        </p>
+        <p className="mt-3 rounded-lg border border-primary/40 bg-secondary/50 p-3 text-sm leading-relaxed">
+          Para menores de 12 anos, o aceite abaixo representa o consentimento específico do responsável para os dados informados na pré-inscrição.
+        </p>
+        <div className="mt-5 flex items-start gap-3">
+          <input
+            id="tally-privacy-consent"
+            type="checkbox"
+            checked={consent}
+            onChange={(event) => setConsent(event.target.checked)}
+            className="mt-1 h-5 w-5 shrink-0 accent-primary"
+          />
+          <label htmlFor="tally-privacy-consent" className="text-sm leading-relaxed">
+            Li a <Link to="/privacidade" className="text-primary underline underline-offset-4">Política de Privacidade</Link> e concordo com o uso dos dados para esta pré-inscrição. Declaro que sou maior de 18 anos e, quando a inscrição for para menor, sou seu pai, mãe ou responsável legal.
+          </label>
+        </div>
+        {!showForm && (
+          <button type="button" disabled={!consent} onClick={() => setShowForm(true)} className={btn("primary", "mt-5 w-full disabled:cursor-not-allowed disabled:opacity-50")}>
+            Abrir formulário de pré-inscrição
+          </button>
+        )}
+        {showForm && (
+          <iframe
+            src="https://tally.so/embed/q5LOWG?alignLeft=1&hideTitle=1&transparentBackground=1"
+            title="Formulário de pré-inscrição do Maison da Costura"
+            className="mt-6 h-[1050px] w-full border-0"
+          />
+        )}
+      </div>
       <div className="mt-6 text-center">
         <button type="button" onClick={() => choose()} className={btn("whatsapp")}>
           <MessageCircle className="h-4 w-4" aria-hidden /> Prefere conversar? Fale com Tatiana ou Laura pelo WhatsApp
@@ -452,6 +472,11 @@ function Contact() {
     <section id="contato" className="bg-secondary/60 py-24">
       <div className="mx-auto max-w-4xl px-4">
         <SectionTitle eyebrow="Contato" title="Fale com o Maison da Costura" />
+        <div className="mx-auto mb-8 max-w-2xl rounded-xl border border-border bg-card p-5 text-center text-sm leading-relaxed">
+          <p className="font-medium">{businessName}</p>
+          <p className="mt-1 text-muted-foreground">{address}</p>
+          <a href={`mailto:${contactEmail}`} className="mt-2 inline-block text-primary underline underline-offset-4">{contactEmail}</a>
+        </div>
         <div className="grid gap-6 sm:grid-cols-2">
           {contacts.map((c) => (
             <article key={c.id} className="rounded-xl border border-border bg-card p-8 text-center shadow-soft">
@@ -470,6 +495,7 @@ function Contact() {
 }
 
 function Location() {
+  const [showMap, setShowMap] = useState(false);
   return (
     <section id="como-chegar" className="mx-auto max-w-6xl px-4 py-24">
       <SectionTitle eyebrow="Como chegar" title="Venha conhecer o Maison da Costura" />
@@ -482,7 +508,15 @@ function Location() {
             <a href={mapsRouteUrl} target="_blank" rel="noopener noreferrer" className={btn("outline")}><Navigation className="h-4 w-4" aria-hidden /> Traçar Rota</a>
           </div>
         </div>
-        <iframe title="Mapa do Maison da Costura" src={mapsEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-80 w-full border-0 md:h-full md:min-h-[380px]" />
+        {showMap ? (
+          <iframe title="Mapa do Maison da Costura" src={mapsEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-80 w-full border-0 md:h-full md:min-h-[380px]" />
+        ) : (
+          <div className="flex min-h-80 flex-col items-center justify-center bg-secondary/40 p-8 text-center">
+            <MapPin className="h-8 w-8 text-primary" aria-hidden />
+            <p className="mt-3 max-w-sm text-sm text-muted-foreground">Ao exibir o mapa, o Google poderá receber dados técnicos do seu navegador, conforme a Política de Privacidade.</p>
+            <button type="button" onClick={() => setShowMap(true)} className={btn("outline", "mt-5")}>Exibir mapa do Google</button>
+          </div>
+        )}
       </div>
     </section>
   );

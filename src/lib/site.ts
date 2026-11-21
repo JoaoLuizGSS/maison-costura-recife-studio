@@ -25,6 +25,9 @@ export function whatsappLink(contact: ContactId, course?: CourseId) {
   return `https://wa.me/${c.wa}?text=${encodeURIComponent(whatsappMessage(contact, course))}`;
 }
 
+export const businessName = "Maison da Costura";
+export const contactEmail = "contato@maisondacostura.com.br";
+
 export const address =
   "Av. Visconde de Suassuna, 337, Santo Amaro. Recife-PE.";
 const q = "Av. Visconde de Suassuna, 337, Santo Amaro, Recife, PE";

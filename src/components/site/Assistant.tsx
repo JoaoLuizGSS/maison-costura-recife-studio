@@ -1,11 +1,13 @@
-import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
+import { createContext, useContext, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
+import { Link } from "@tanstack/react-router";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { MessageCircle, X } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 
 import logoSrc from "@/assets/logo.png";
 import { useContactChooser } from "@/components/site/ContactChooser";
 import { btn } from "@/components/site/ui";
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import {
   Conversation,
   ConversationContent,
@@ -28,20 +30,26 @@ export const useAssistant = () => useContext(Ctx);
 
 export function AssistantProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
+  const returnFocusRef = useRef<HTMLElement | null>(null);
   return (
-    <Ctx.Provider value={{ openAssistant: () => setOpen(true) }}>
+    <Ctx.Provider value={{ openAssistant: () => {
+      returnFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      setOpen(true);
+    } }}>
       {children}
-      {open && <AssistantPanel onClose={() => setOpen(false)} />}
+      <Dialog open={open} onOpenChange={setOpen}>
+        <AssistantPanel onClose={() => setOpen(false)} returnFocusRef={returnFocusRef} />
+      </Dialog>
     </Ctx.Provider>
   );
 }
 
-function AssistantPanel({ onClose }: { onClose: () => void }) {
+function AssistantPanel({ onClose, returnFocusRef }: { onClose: () => void; returnFocusRef: RefObject<HTMLElement | null> }) {
   const choose = useContactChooser();
   // External hosting (e.g. maisondacostura.com.br) has no server, so call the Lovable-hosted endpoint there.
   const transport = useMemo(() => {
-    const h = window.location.hostname;
-    const local = h === "localhost" || h.endsWith(".lovable.app") || h.endsWith(".lovableproject.com");
+    const h = typeof window === "undefined" ? "" : window.location.hostname;
+    const local = h === "" || h === "localhost" || h.endsWith(".lovable.app") || h.endsWith(".lovableproject.com");
     const api = local ? "/api/public/assistente" : `${ASSISTANT_ORIGIN}/api/public/assistente`;
     return new DefaultChatTransport({ api });
   }, []);
@@ -49,17 +57,17 @@ function AssistantPanel({ onClose }: { onClose: () => void }) {
   const busy = status === "submitted" || status === "streaming";
 
   return (
-    <div
-      role="dialog"
-      aria-label="Assistente do Maison da Costura"
-      className="fixed inset-0 z-50 flex flex-col bg-background shadow-soft sm:inset-auto sm:bottom-24 sm:right-4 sm:h-[600px] sm:w-[400px] sm:rounded-2xl sm:border sm:border-border"
+    <DialogContent
+      onCloseAutoFocus={(event) => {
+        event.preventDefault();
+        returnFocusRef.current?.focus();
+      }}
+      className="inset-0 left-0 top-0 flex h-dvh w-full max-w-none translate-x-0 translate-y-0 flex-col gap-0 overflow-hidden rounded-none border-0 p-0 shadow-soft sm:inset-auto sm:bottom-24 sm:left-auto sm:right-4 sm:top-auto sm:h-[600px] sm:w-[400px] sm:max-w-[calc(100vw-2rem)] sm:rounded-2xl sm:border"
     >
-      <div className="flex items-center gap-2 border-b border-border px-4 py-3">
+      <div className="flex items-center gap-2 border-b border-border px-4 py-3 pr-14">
         <img src={logoSrc} alt="" className="h-9 w-9 rounded-full" />
-        <p className="flex-1 font-display text-sm font-semibold">Assistente do Maison</p>
-        <button onClick={onClose} aria-label="Fechar assistente" className="rounded-md p-1.5 hover:bg-secondary">
-          <X className="h-5 w-5" aria-hidden />
-        </button>
+        <DialogTitle className="flex-1 font-display text-sm font-semibold">Assistente do Maison</DialogTitle>
+        <DialogDescription className="sr-only">Conversa com inteligência artificial sobre os cursos do Maison da Costura.</DialogDescription>
       </div>
       <Conversation className="flex-1">
         <ConversationContent className="gap-5 px-4 py-5">
@@ -67,7 +75,7 @@ function AssistantPanel({ onClose }: { onClose: () => void }) {
             <ConversationEmptyState
               icon={<img src={logoSrc} alt="" className="h-14 w-14 rounded-full" />}
               title="Tire suas dúvidas"
-              description="Pergunte sobre os cursos de Corte e Costura e de Modelagem: valores, duração, conteúdo e endereço."
+              description="Pergunte sobre cursos, valores, duração, conteúdo e endereço."
             />
           )}
           {messages.map((m) => (
@@ -87,9 +95,9 @@ function AssistantPanel({ onClose }: { onClose: () => void }) {
           ))}
           {status === "submitted" && <Shimmer className="text-sm">Costurando a resposta...</Shimmer>}
           {error && (
-            <div className="rounded-lg border border-border bg-card p-3">
+            <div className="rounded-lg border border-border bg-card p-3" role="alert">
               <p className="text-sm text-destructive">Não foi possível responder agora.</p>
-              <button type="button" onClick={() => choose()} className={btn("whatsapp", "mt-3 w-full")}>
+              <button type="button" onClick={() => { onClose(); choose(); }} className={btn("whatsapp", "mt-3 w-full")}>
                 <MessageCircle className="h-4 w-4" aria-hidden /> Falar pelo WhatsApp
               </button>
             </div>
@@ -104,7 +112,11 @@ function AssistantPanel({ onClose }: { onClose: () => void }) {
             <PromptInputSubmit status={status} disabled={busy ? false : undefined} onStop={stop} />
           </PromptInputFooter>
         </PromptInput>
+        <p className="mt-2 text-center text-xs text-muted-foreground">
+          Não envie dados pessoais desnecessários. As mensagens são processadas por IA. Consulte a{" "}
+          <Link to="/privacidade" className="text-primary underline underline-offset-4">Política de Privacidade</Link>.
+        </p>
       </div>
-    </div>
+    </DialogContent>
   );
 }

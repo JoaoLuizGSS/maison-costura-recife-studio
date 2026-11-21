@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -62,7 +62,7 @@ function AuthPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-secondary/40 px-4">
+    <main className="flex min-h-dvh items-center justify-center bg-secondary/40 px-4">
       <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8 text-center shadow-soft">
         <img src={logoSrc} alt="Maison da Costura" className="mx-auto h-20 w-20 rounded-full" />
         <p className="mt-4 font-script text-3xl text-primary">Maison da Costura</p>
@@ -78,10 +78,11 @@ function AuthPage() {
             {busy === "lovable" ? "Abrindo..." : "Entrar com Lovable"}
           </button>
         </div>
-        <a href="/" className="mt-6 inline-block text-sm text-muted-foreground underline-offset-4 hover:underline">
+        <Link to="/privacidade" className="mt-5 block text-sm text-primary underline underline-offset-4">Política de Privacidade</Link>
+        <a href="/" className="mt-4 inline-block text-sm text-muted-foreground underline-offset-4 hover:underline">
           Voltar para o site
         </a>
       </div>
-    </div>
+    </main>
   );
 }

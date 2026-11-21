@@ -14,3 +14,4 @@
 - Keep Tailwind and its Vite integration on the same exact version; the shared Lovable Vite config already registers the plugin.
 - Site images (including the logo) are imported from src/assets so they ship inside the build; Lovable-only CDN asset links break on GitHub-based external hosting.
 - The AI assistant chat lives in src/routes/_authenticated/chat*.tsx (threaded, DB-persisted) with the streaming endpoint at src/routes/api/chat.ts calling Gemini through the Lovable AI Gateway; the system prompt is built in src/lib/chat.server.ts from src/lib/site.ts facts and must never state data that is not in site.ts.
+- Analytics consent is owned by src/lib/consent.ts, with defaults in the root route head and UI in CookieBanner; read permission through that module so every tracking tool follows the visitor's choice.

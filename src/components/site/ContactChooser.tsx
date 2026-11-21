@@ -13,10 +13,10 @@ export function ContactChooserProvider({ children }: { children: ReactNode }) {
     <Ctx.Provider value={(c) => { setCourse(c); setOpen(true); }}>
       {children}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="bg-background">
+        <DialogContent className="bg-background" aria-describedby="contact-chooser-description">
           <DialogHeader>
             <DialogTitle className="font-display text-2xl">Com quem deseja falar?</DialogTitle>
-            <DialogDescription>
+            <DialogDescription id="contact-chooser-description">
               {course ? `Escolha uma atendente para saber mais sobre o curso de ${courseNames[course]}.` : "Escolha uma atendente para conversar pelo WhatsApp."}
             </DialogDescription>
           </DialogHeader>

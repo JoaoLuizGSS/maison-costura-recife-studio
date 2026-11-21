@@ -91,6 +91,7 @@ export const ConversationScrollButton = ({
         onClick={handleScrollToBottom}
         size="icon"
         type="button"
+        aria-label="Rolar para a mensagem mais recente"
         variant="outline"
         {...props}
       >

@@ -1,7 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { address, courses, mapsEmbedUrl, mapsRouteUrl, mapsSearchUrl, materiais, whatsappLink } from "@/lib/site";
+import { address, businessName, contactEmail, courses, mapsEmbedUrl, mapsRouteUrl, mapsSearchUrl, materiais, whatsappLink } from "@/lib/site";
 
 describe("site info", () => {
+  it("uses the confirmed public business identity and contact email", () => {
+    expect(businessName).toBe("Maison da Costura");
+    expect(contactEmail).toBe("contato@maisondacostura.com.br");
+  });
   it("uses the updated street address without the shop or gallery", () => {
     expect(address).toBe("Av. Visconde de Suassuna, 337, Santo Amaro. Recife-PE.");
   });
